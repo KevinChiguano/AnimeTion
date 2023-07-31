@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activities.MenuActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Inicio"
+            android:fontFamily="@font/bondrians"
+            android:textSize="60sp"
+            android:layout_marginTop="60dp"
+            android:layout_marginLeft="25dp"/>
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_horizontal">
+
+        <Button
+            android:id="@+id/btnAnime"
+            android:layout_width="match_parent"
+            android:text="ANIME"
+            android:backgroundTint="@color/btn_color"
+            android:drawableLeft="@drawable/ic_anime_face_4_24"
+            style="@style/MenuButton"/>
+
+        <Button
+            android:id="@+id/btnManga"
+            android:layout_width="match_parent"
+            android:text="MANGA"
+            android:backgroundTint="@color/btn_color"
+            android:drawableLeft="@drawable/ic_manga_book_24"
+            style="@style/MenuButton"/>
+
+        <Button
+            android:id="@+id/btnCerrarSecion"
+            android:layout_width="match_parent"
+            android:text="Cerrar sesión"
+            android:backgroundTint="@color/btn_color"
+            android:drawableLeft="@drawable/ic_logout_24"
+            style="@style/MenuButton"/>
+
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
