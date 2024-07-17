@@ -9,5 +9,8 @@
     <color name="color_morado_light">#e0d9ed</color>
     <color name="color_gray">#b5b5b5</color>
     <color name="color_gray_light">#F5F5F5</color>
+    <color name="color_gray_full">#243c44</color>
+
+
 
 </resources>

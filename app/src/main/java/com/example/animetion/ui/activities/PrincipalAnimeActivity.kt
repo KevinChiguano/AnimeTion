@@ -3,28 +3,15 @@ package com.example.animetion.ui.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 
-import androidx.core.content.ContextCompat
-import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.animetion.R
 import com.example.animetion.databinding.ActivityPrincipalAnimeBinding
-import com.example.animetion.logic.jikanAnimeLogic.JikanAnimeLogic
-import com.example.animetion.ui.adapter.AnimeAdapter
-import kotlinx.coroutines.launch
+import com.example.animetion.ui.fragments.BuscarAnimeFragment
+import com.example.animetion.ui.fragments.InicioAnimeFragment
+import com.example.animetion.ui.utilities.FragmentsManager
 
 class PrincipalAnimeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityPrincipalAnimeBinding
-
-    private lateinit var topAnimeAdapter: AnimeAdapter
-    private lateinit var temporadaAdapter: AnimeAdapter
-    private lateinit var proximosAdapter: AnimeAdapter
-
-    private lateinit var lManagerTop: LinearLayoutManager
-    private lateinit var lManagerTemporada: LinearLayoutManager
-    private lateinit var lManagerProximos: LinearLayoutManager
-
-    private val animeLogic = JikanAnimeLogic()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,107 +19,50 @@ class PrincipalAnimeActivity : AppCompatActivity() {
         binding = ActivityPrincipalAnimeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        lManagerTop = LinearLayoutManager(
-            this,
-            LinearLayoutManager.HORIZONTAL,
-            false
-        )
-
-        lManagerTemporada = LinearLayoutManager(
-            this,
-            LinearLayoutManager.HORIZONTAL,
-            false
-        )
-
-        lManagerProximos = LinearLayoutManager(
-            this,
-            LinearLayoutManager.HORIZONTAL,
-            false
-        )
-
-        configSwipeTop()
-        configSwipeRecomendados()
-        configSwipeTemporada()
-
-        lifecycleScope.launch {
-            val topAnimeList = animeLogic.getAllAnimes()
-            val randomList = animeLogic.getAnimesProximos()
-            val temporadaList = animeLogic.getAnimesTemporada()
-
-            // Crea el adaptador y configura el RecyclerView para los top animes
-            topAnimeAdapter = AnimeAdapter(topAnimeList)
-            binding.rvAnime.apply {
-                adapter = topAnimeAdapter
-                layoutManager = lManagerTop
-            }
-
-
-            temporadaAdapter = AnimeAdapter(temporadaList)
-            binding.rvAnimesTemporada.apply {
-                adapter = temporadaAdapter
-                layoutManager = lManagerTemporada
-            }
-
-            // Crea el adaptador y configura el RecyclerView para los animes recomendados
-            proximosAdapter = AnimeAdapter(randomList)
-            binding.rvAnimesProximos.apply {
-                adapter = proximosAdapter
-                layoutManager = lManagerProximos
-            }
-
-        }
     }
 
-    private fun configSwipeTop() {
-        binding.rvSwipeAnime.setColorSchemeResources(R.color.color_morado)
-        binding.rvSwipeAnime.setProgressBackgroundColorSchemeColor(
-            ContextCompat.getColor(
-                this,
-                R.color.color_gray
-            )
-        )
+    override fun onStart() {
+        super.onStart()
 
-        binding.rvSwipeAnime.setOnRefreshListener {
-            lifecycleScope.launch {
-                val newAnimes = animeLogic.getAllAnimes()
-                topAnimeAdapter.updateListItem(newAnimes)
-                binding.rvSwipeAnime.isRefreshing = false
-            }
-        }
-    }
 
-    private fun configSwipeRecomendados() {
-        binding.rvSwipeProximos.setColorSchemeResources(R.color.color_morado)
-        binding.rvSwipeProximos.setProgressBackgroundColorSchemeColor(
-            ContextCompat.getColor(
-                this,
-                R.color.color_gray
-            )
-        )
 
-        binding.rvSwipeProximos.setOnRefreshListener {
-            lifecycleScope.launch {
-                val newAnimes = animeLogic.getAnimesProximos()
-                proximosAdapter.updateListItem(newAnimes)
-                binding.rvSwipeProximos.isRefreshing = false
-            }
-        }
-    }
+        binding.bottomNavigationView.setOnItemSelectedListener(){item ->
+            when(item.itemId) {
+                R.id.menu_item_inicio -> {
+                    //instanciar fragment
 
-    private fun configSwipeTemporada() {
-        binding.rvSwipeTemporada.setColorSchemeResources(R.color.color_morado)
-        binding.rvSwipeTemporada.setProgressBackgroundColorSchemeColor(
-            ContextCompat.getColor(
-                this,
-                R.color.color_gray
-            )
-        )
+                    FragmentsManager().replaceFragment(
+                        supportFragmentManager,
+                        binding.frmContainer.id,
+                        InicioAnimeFragment()
+                    )
 
-        binding.rvSwipeTemporada.setOnRefreshListener {
-            lifecycleScope.launch {
-                val newAnimes = animeLogic.getAnimesTemporada()
-                temporadaAdapter.updateListItem(newAnimes)
-                binding.rvSwipeTemporada.isRefreshing = false
+
+                    true
+                }
+                R.id.menu_item_buscar -> {
+                    // Respond to navigation item 2 click
+
+                    FragmentsManager().replaceFragment(
+                        supportFragmentManager,
+                        binding.frmContainer.id,
+                        BuscarAnimeFragment()
+                    )
+
+                    true
+                }
+                R.id.menu_item_favoritos -> {
+                    // Respond to navigation item 2 click
+
+                    FragmentsManager().replaceFragment(
+                        supportFragmentManager,
+                        binding.frmContainer.id,
+                        InicioAnimeFragment()
+                    )
+
+                    true
+                }
+                else -> false
             }
         }
     }

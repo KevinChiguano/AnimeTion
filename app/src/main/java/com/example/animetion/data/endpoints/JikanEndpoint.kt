@@ -20,5 +20,12 @@ interface JikanEndpoint {
     suspend fun getAnimesProximos(@Query("page") page: Int, @Query("limit") limit: Int
     ): Response<JikanAnimeEntity>
 
+    @GET("anime")
+    suspend fun searchAnimeByYearAndGenre(
+        @Query("start_date") startYear: String,
+        @Query("genres") genres: String,
+        @Query("page") page: Int,
+        @Query("limit") limit: Int,
+    ): Response<JikanAnimeEntity>
 
 }
